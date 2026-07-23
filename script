@@ -180,7 +180,6 @@ Tabs.Visual:AddButton({
     end 
 })
 
--- NÚT HITBOX MỚI ĐƯỢC THÊM VÀO ĐÂY:
 Tabs.Visual:AddButton({ 
     Title = "🎯 Hitbox Script", 
     Description = "Mở rộng Hitbox đối thủ",
@@ -218,6 +217,14 @@ UICorner.Parent = MainButton
 
 MainButton.MouseButton1Click:Connect(function()
     game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.K, false, game)
+end)
+
+-- TỰ ĐỘNG XÓA NÚT "K" KHI TẮT / DEDESTROY WINDOW
+Fluent.Options = Fluent.Options or {}
+Fluent:OnUnload(function()
+    if ToggleButton then
+        ToggleButton:Destroy()
+    end
 end)
 
 Window:SelectTab(1)
