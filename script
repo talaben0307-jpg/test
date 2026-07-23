@@ -13,11 +13,13 @@ local Window = Fluent:CreateWindow({
 -- ==========================================
 -- ÂM THANH KHI MỞ SCRIPT (ARA ARA) 🔊
 -- ==========================================
-local OpenSound = Instance.new("Sound")
-OpenSound.SoundId = "rbxassetid://6026521232"
-OpenSound.Volume = 1
-OpenSound.Parent = game:GetService("SoundService")
-OpenSound:Play()
+task.spawn(function()
+    local OpenSound = Instance.new("Sound")
+    OpenSound.SoundId = "rbxassetid://6026521232"
+    OpenSound.Volume = 1
+    OpenSound.Parent = game:GetService("SoundService")
+    OpenSound:Play()
+end)
 
 -- ==========================================
 -- HÀM TẢI SCRIPT AN TOÀN (SAFE LOAD)
@@ -31,24 +33,6 @@ local function SafeLoad(url, name)
     else
         Fluent:Notify({Title = "THẤT BẠI", Content = "Lỗi khi tải " .. name .. "! Vui lòng thử lại sau.", Duration = 5})
         warn("Lỗi Script [" .. name .. "]: " .. tostring(err))
-    end
-end
-
--- ==========================================
--- HÀM TẢI ẢNH TỪ GOOGLE DRIVE HOẶC URL LỚN
--- ==========================================
-local function GetOnlineImage(url, fileName)
-    local success, result = pcall(function()
-        if not isfile(fileName) then
-            writefile(fileName, game:HttpGet(url))
-        end
-        return getcustomasset(fileName)
-    end)
-    if success then
-        return result
-    else
-        warn("Lỗi nạp ảnh từ URL: " .. tostring(result))
-        return ""
     end
 end
 
@@ -216,23 +200,43 @@ Tabs.Visual:AddButton({
 })
 
 -- ==========================================
--- KHUNG HIỂN THỊ ẢNH CỦA BẠN (GOOGLE DRIVE)
+-- KHUNG HIỂN THỊ ẢNH (TẢI BẤT ĐỒNG BỘ NGHĨA LA KHÔNG GÂY VĂNG GAME)
 -- ==========================================
 Tabs.Visual:AddSection("🖼️ Profile Image")
 
-local DriveImageUrl = "https://drive.google.com/uc?export=download&id=1VlndbEg67pXtOtG_82l7WpB28L9Pjr8o"
-
 local ImageFrame = Instance.new("ImageLabel")
 ImageFrame.Parent = Tabs.Visual.ElementContainer
-ImageFrame.Size = UDim2.new(0, 150, 0, 150) -- Kích thước khung ảnh
-ImageFrame.Image = GetOnlineImage(DriveImageUrl, "universe_user_avatar.png") -- Tải và nạp ảnh
+ImageFrame.Size = UDim2.new(0, 150, 0, 150)
 ImageFrame.BackgroundTransparency = 1
-ImageFrame.ScaleType = Enum.ScaleType.Fit -- Giữ đúng tỷ lệ ảnh
+ImageFrame.ScaleType = Enum.ScaleType.Fit
 
--- Bo tròn góc cho khung ảnh
 local UICorner = Instance.new("UICorner")
 UICorner.CornerRadius = UDim.new(0, 10)
 UICorner.Parent = ImageFrame
+
+-- Tải ảnh an toàn trong luồng riêng
+task.spawn(function()
+    local fileName = "universe_avatar_v2.png"
+    local imageUrl = "https://raw.githubusercontent.com/bphong0946/Universe/main/avatar.png" -- Nếu có link raw direct
+
+    -- Ưu tiên kiểm tra hàm getcustomasset
+    if writefile and getcustomasset then
+        if not isfile(fileName) then
+            local success, content = pcall(function()
+                return game:HttpGet("https://drive.google.com/uc?export=download&id=1VlndbEg67pXtOtG_82l7WpB28L9Pjr8o")
+            end)
+            if success and content and #content > 1000 then
+                writefile(fileName, content)
+            end
+        end
+
+        if isfile(fileName) then
+            pcall(function()
+                ImageFrame.Image = getcustomasset(fileName)
+            end)
+        end
+    end
+end)
 
 -- ==========================================
 -- NÚT LƠ LỬNG (FLOATING BUTTON TOGGLE)
@@ -243,7 +247,7 @@ end
 
 local ToggleButton = Instance.new("ScreenGui")
 local MainButton = Instance.new("TextButton")
-local UICorner = Instance.new("UICorner")
+local BtnCorner = Instance.new("UICorner")
 
 ToggleButton.Name = "UniverseToggleButton"
 ToggleButton.Parent = game:GetService("CoreGui")
@@ -258,14 +262,13 @@ MainButton.Font = Enum.Font.FredokaOne
 MainButton.TextSize = 20
 MainButton.Draggable = true 
 
-UICorner.CornerRadius = UDim.new(0, 10)
-UICorner.Parent = MainButton
+BtnCorner.CornerRadius = UDim.new(0, 10)
+BtnCorner.Parent = MainButton
 
 MainButton.MouseButton1Click:Connect(function()
     game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.K, false, game)
 end)
 
--- TỰ ĐỘNG XÓA NÚT "K" KHI TẮT WINDOW
 Fluent:OnUnload(function()
     if ToggleButton then
         ToggleButton:Destroy()
