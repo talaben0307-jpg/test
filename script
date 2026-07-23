@@ -11,17 +11,6 @@ local Window = Fluent:CreateWindow({
 })
 
 -- ==========================================
--- ÂM THANH KHI MỞ SCRIPT (ARA ARA) 🔊
--- ==========================================
-task.spawn(function()
-    local OpenSound = Instance.new("Sound")
-    OpenSound.SoundId = "rbxassetid://6026521232"
-    OpenSound.Volume = 1
-    OpenSound.Parent = game:GetService("SoundService")
-    OpenSound:Play()
-end)
-
--- ==========================================
 -- HÀM TẢI SCRIPT AN TOÀN (SAFE LOAD)
 -- ==========================================
 local function SafeLoad(url, name)
@@ -199,44 +188,13 @@ Tabs.Visual:AddButton({
     end 
 })
 
--- ==========================================
--- KHUNG HIỂN THỊ ẢNH (TẢI BẤT ĐỒNG BỘ NGHĨA LA KHÔNG GÂY VĂNG GAME)
--- ==========================================
-Tabs.Visual:AddSection("🖼️ Profile Image")
-
-local ImageFrame = Instance.new("ImageLabel")
-ImageFrame.Parent = Tabs.Visual.ElementContainer
-ImageFrame.Size = UDim2.new(0, 150, 0, 150)
-ImageFrame.BackgroundTransparency = 1
-ImageFrame.ScaleType = Enum.ScaleType.Fit
-
-local UICorner = Instance.new("UICorner")
-UICorner.CornerRadius = UDim.new(0, 10)
-UICorner.Parent = ImageFrame
-
--- Tải ảnh an toàn trong luồng riêng
-task.spawn(function()
-    local fileName = "universe_avatar_v2.png"
-    local imageUrl = "https://raw.githubusercontent.com/bphong0946/Universe/main/avatar.png" -- Nếu có link raw direct
-
-    -- Ưu tiên kiểm tra hàm getcustomasset
-    if writefile and getcustomasset then
-        if not isfile(fileName) then
-            local success, content = pcall(function()
-                return game:HttpGet("https://drive.google.com/uc?export=download&id=1VlndbEg67pXtOtG_82l7WpB28L9Pjr8o")
-            end)
-            if success and content and #content > 1000 then
-                writefile(fileName, content)
-            end
-        end
-
-        if isfile(fileName) then
-            pcall(function()
-                ImageFrame.Image = getcustomasset(fileName)
-            end)
-        end
+Tabs.Visual:AddButton({
+    Title = "📜 Test Script",
+    Description = "Chạy script test từ talaben0307",
+    Callback = function()
+        SafeLoad("https://raw.githubusercontent.com/talaben0307-jpg/test/refs/heads/main/script", "Test Script")
     end
-end)
+})
 
 -- ==========================================
 -- NÚT LƠ LỬNG (FLOATING BUTTON TOGGLE)
