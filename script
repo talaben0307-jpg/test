@@ -176,4 +176,48 @@ Tabs.Visual:AddSection("Graphics & Combat Aids")
 Tabs.Visual:AddButton({ 
     Title = "RTX Shader", 
     Callback = function() 
-        SafeLoad("
+        SafeLoad("https://raw.githubusercontent.com/CludeHub/RTX-Night-Day/refs/heads/main/RTX-Like-Never-Before.lua", "RTX Shader") 
+    end 
+})
+
+-- NÚT HITBOX MỚI ĐƯỢC THÊM VÀO ĐÂY:
+Tabs.Visual:AddButton({ 
+    Title = "🎯 Hitbox Script", 
+    Description = "Mở rộng Hitbox đối thủ",
+    Callback = function() 
+        SafeLoad("https://pastefy.app/ItfO0tdg/raw", "Hitbox Script") 
+    end 
+})
+
+-- ==========================================
+-- NÚT LƠ LỬNG (FLOATING BUTTON TOGGLE)
+-- ==========================================
+if game:GetService("CoreGui"):FindFirstChild("UniverseToggleButton") then
+    game:GetService("CoreGui").UniverseToggleButton:Destroy()
+end
+
+local ToggleButton = Instance.new("ScreenGui")
+local MainButton = Instance.new("TextButton")
+local UICorner = Instance.new("UICorner")
+
+ToggleButton.Name = "UniverseToggleButton"
+ToggleButton.Parent = game:GetService("CoreGui")
+
+MainButton.Parent = ToggleButton
+MainButton.Size = UDim2.new(0, 45, 0, 45)
+MainButton.Position = UDim2.new(0.05, 0, 0.4, 0)
+MainButton.Text = "K"
+MainButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+MainButton.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+MainButton.Font = Enum.Font.FredokaOne
+MainButton.TextSize = 20
+MainButton.Draggable = true 
+
+UICorner.CornerRadius = UDim.new(0, 10)
+UICorner.Parent = MainButton
+
+MainButton.MouseButton1Click:Connect(function()
+    game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.K, false, game)
+end)
+
+Window:SelectTab(1)
