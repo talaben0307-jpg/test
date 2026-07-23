@@ -11,10 +11,10 @@ local Window = Fluent:CreateWindow({
 })
 
 -- ==========================================
--- ÂM THANH KHI MỞ
+-- ÂM THANH KHI MỞ SCRIPT (ARA ARA) 🔊
 -- ==========================================
 local OpenSound = Instance.new("Sound")
-OpenSound.SoundId = "rbxassetid://6026521232" -- Âm thanh Anime Ara Ara
+OpenSound.SoundId = "rbxassetid://6026521232"
 OpenSound.Volume = 1
 OpenSound.Parent = game:GetService("SoundService")
 OpenSound:Play()
@@ -31,6 +31,24 @@ local function SafeLoad(url, name)
     else
         Fluent:Notify({Title = "THẤT BẠI", Content = "Lỗi khi tải " .. name .. "! Vui lòng thử lại sau.", Duration = 5})
         warn("Lỗi Script [" .. name .. "]: " .. tostring(err))
+    end
+end
+
+-- ==========================================
+-- HÀM TẢI ẢNH TỪ GOOGLE DRIVE HOẶC URL LỚN
+-- ==========================================
+local function GetOnlineImage(url, fileName)
+    local success, result = pcall(function()
+        if not isfile(fileName) then
+            writefile(fileName, game:HttpGet(url))
+        end
+        return getcustomasset(fileName)
+    end)
+    if success then
+        return result
+    else
+        warn("Lỗi nạp ảnh từ URL: " .. tostring(result))
+        return ""
     end
 end
 
@@ -196,6 +214,25 @@ Tabs.Visual:AddButton({
         SafeLoad("https://pastefy.app/ItfO0tdg/raw", "Hitbox Script") 
     end 
 })
+
+-- ==========================================
+-- KHUNG HIỂN THỊ ẢNH CỦA BẠN (GOOGLE DRIVE)
+-- ==========================================
+Tabs.Visual:AddSection("🖼️ Profile Image")
+
+local DriveImageUrl = "https://drive.google.com/uc?export=download&id=1VlndbEg67pXtOtG_82l7WpB28L9Pjr8o"
+
+local ImageFrame = Instance.new("ImageLabel")
+ImageFrame.Parent = Tabs.Visual.ElementContainer
+ImageFrame.Size = UDim2.new(0, 150, 0, 150) -- Kích thước khung ảnh
+ImageFrame.Image = GetOnlineImage(DriveImageUrl, "universe_user_avatar.png") -- Tải và nạp ảnh
+ImageFrame.BackgroundTransparency = 1
+ImageFrame.ScaleType = Enum.ScaleType.Fit -- Giữ đúng tỷ lệ ảnh
+
+-- Bo tròn góc cho khung ảnh
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0, 10)
+UICorner.Parent = ImageFrame
 
 -- ==========================================
 -- NÚT LƠ LỬNG (FLOATING BUTTON TOGGLE)
