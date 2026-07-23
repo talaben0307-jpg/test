@@ -11,6 +11,15 @@ local Window = Fluent:CreateWindow({
 })
 
 -- ==========================================
+-- ÂM THANH KHI MỞ
+-- ==========================================
+local OpenSound = Instance.new("Sound")
+OpenSound.SoundId = "rbxassetid://6026521232" -- Âm thanh Anime Ara Ara
+OpenSound.Volume = 1
+OpenSound.Parent = game:GetService("SoundService")
+OpenSound:Play()
+
+-- ==========================================
 -- HÀM TẢI SCRIPT AN TOÀN (SAFE LOAD)
 -- ==========================================
 local function SafeLoad(url, name)
@@ -219,8 +228,7 @@ MainButton.MouseButton1Click:Connect(function()
     game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.K, false, game)
 end)
 
--- TỰ ĐỘNG XÓA NÚT "K" KHI TẮT / DEDESTROY WINDOW
-Fluent.Options = Fluent.Options or {}
+-- TỰ ĐỘNG XÓA NÚT "K" KHI TẮT WINDOW
 Fluent:OnUnload(function()
     if ToggleButton then
         ToggleButton:Destroy()
