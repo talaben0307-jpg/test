@@ -26,10 +26,11 @@ local function SafeLoad(url, name)
 end
 
 -- ==========================================
--- KHỞI TẠO TẤT CẢ 5 TAB
+-- KHỞI TẠO TẤT CẢ CÁC TAB
 -- ==========================================
 local Tabs = {
     Op = Window:AddTab({ Title = "Op script", Icon = "gem" }),
+    MM2 = Window:AddTab({ Title = "MM2", Icon = "skull" }),
     Fish = Window:AddTab({ Title = "Heavyweight Fishing", Icon = "fish" }),
     TSB = Window:AddTab({ Title = "TSB Script", Icon = "swords" }),
     Player = Window:AddTab({ Title = "Player Tools", Icon = "user" }),
@@ -72,7 +73,20 @@ Tabs.Op:AddButton({
 })
 
 -- ==========================================
--- 2. TAB: HEAVYWEIGHT FISHING 🎣
+-- 2. TAB: MM2 🔪 (ESP by phong)
+-- ==========================================
+Tabs.MM2:AddSection("ESP by phong")
+
+Tabs.MM2:AddButton({
+    Title = "🎯 Bật MM2 ESP Roles",
+    Description = "Chạy script ESP trực tiếp từ link của bạn",
+    Callback = function()
+        SafeLoad("https://raw.githubusercontent.com/talaben0307-jpg/mm2-script/refs/heads/main/main", "MM2 ESP by phong")
+    end
+})
+
+-- ==========================================
+-- 3. TAB: HEAVYWEIGHT FISHING 🎣
 -- ==========================================
 Tabs.Fish:AddSection("🔥 Featured Scripts")
 
@@ -98,7 +112,7 @@ Tabs.Fish:AddButton({
 })
 
 -- ==========================================
--- 3. TAB: TSB SCRIPT ⚔️
+-- 4. TAB: TSB SCRIPT ⚔️
 -- ==========================================
 Tabs.TSB:AddSection("🎭 Animations")
 
@@ -133,7 +147,7 @@ Tabs.TSB:AddButton({
 })
 
 -- ==========================================
--- 4. TAB: PLAYER TOOLS 🛠️
+-- 5. TAB: PLAYER TOOLS 🛠️
 -- ==========================================
 Tabs.Player:AddSection("System Tools")
 
@@ -169,7 +183,7 @@ Tabs.Player:AddButton({
 })
 
 -- ==========================================
--- 5. TAB: VISUALS ✨
+-- 6. TAB: VISUALS ✨
 -- ==========================================
 Tabs.Visual:AddSection("Graphics & Combat Aids")
 
