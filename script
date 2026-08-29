@@ -1,6 +1,6 @@
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 
--- Tạo Window chính nhưng ẩn đi lúc đầu để kiểm tra Key
+-- Tạo Window chính nhưng ẩn đi lúc đầu (chờ nhập key)
 local Window = Fluent:CreateWindow({
     Title = "Universe Script by @bphong0946 🌌",
     SubTitle = "⚡ Full Scripts - FPS Boost Update",
@@ -11,8 +11,15 @@ local Window = Fluent:CreateWindow({
     MinimizeKey = Enum.KeyCode.K 
 })
 
+-- Ẩn cửa sổ Fluent khi mới khởi động
+if Window.Enabled ~= nil then
+    Window.Enabled = false
+elseif Window.Hide then
+    Window:Hide()
+end
+
 -- ==========================================
--- HỆ THỐNG NHẬP KEY BẢO MẬT (KEY SYSTEM)
+-- HỆ THỐNG NHẬP KEY BẢO MẬT (KÉO THẢ ĐƯỢC)
 -- ==========================================
 local CorrectKey = "0946"
 
@@ -32,7 +39,6 @@ local function CreateKeyUI()
     MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
     MainFrame.Position = UDim2.new(0.5, -175, 0.5, -100)
     MainFrame.Size = UDim2.new(0, 350, 0, 180)
-    MainFrame.Draggable = true
 
     local UICorner = Instance.new("UICorner")
     UICorner.CornerRadius = UDim.new(0, 10)
@@ -50,6 +56,35 @@ local function CreateKeyUI()
     local TitleCorner = Instance.new("UICorner")
     TitleCorner.CornerRadius = UDim.new(0, 10)
     TitleCorner.Parent = Title
+
+    -- Tính năng kéo thả (Draggable) mượt mà cho bảng Key
+    local dragging, dragInput, dragStart, startPos
+    Title.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = MainFrame.Position
+            
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+
+    Title.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            dragInput = input
+        end
+    end)
+
+    game:GetService("UserInputService").InputChanged:Connect(function(input)
+        if input == dragInput and dragging then
+            local delta = input.Position - dragStart
+            MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        end
+    end)
 
     local TextBox = Instance.new("TextBox")
     TextBox.Parent = MainFrame
@@ -83,6 +118,12 @@ local function CreateKeyUI()
     SubmitBtn.MouseButton1Click:Connect(function()
         if TextBox.Text == CorrectKey then
             ScreenGui:Destroy()
+            -- Hiện lại giao diện Fluent sau khi nhập đúng key
+            if Window.Enabled ~= nil then
+                Window.Enabled = true
+            elseif Window.Show then
+                Window:Show()
+            end
             Fluent:Notify({Title = "THÀNH CÔNG", Content = "Đã mở khóa Script thành công!", Duration = 3})
         else
             SubmitBtn.Text = "❌ SAI KEY! THỬ LẠI"
@@ -94,7 +135,7 @@ local function CreateKeyUI()
     end)
 end
 
--- Kích hoạt bảng nhập Key khi chạy script
+-- Kích hoạt bảng nhập Key
 CreateKeyUI()
 
 -- ==========================================
@@ -130,7 +171,7 @@ Tabs.MM2:AddSection("ESP by phong")
 
 Tabs.MM2:AddButton({
     Title = "🎯 Bật MM2 ESP Roles",
-    Description = "Chạy script ESP trực tiếp từ link của bạn",
+    Description = "Chạy script ESP chính từ GitHub của bạn",
     Callback = function()
         SafeLoad("https://raw.githubusercontent.com/talaben0307-jpg/mm2-script/refs/heads/main/main", "MM2 ESP by phong")
     end
