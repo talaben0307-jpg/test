@@ -1,5 +1,6 @@
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 
+-- Tạo Window chính nhưng ẩn đi lúc đầu để kiểm tra Key
 local Window = Fluent:CreateWindow({
     Title = "Universe Script by @bphong0946 🌌",
     SubTitle = "⚡ Full Scripts - FPS Boost Update",
@@ -9,6 +10,92 @@ local Window = Fluent:CreateWindow({
     Theme = "Dark",
     MinimizeKey = Enum.KeyCode.K 
 })
+
+-- ==========================================
+-- HỆ THỐNG NHẬP KEY BẢO MẬT (KEY SYSTEM)
+-- ==========================================
+local CorrectKey = "0946"
+
+local function CreateKeyUI()
+    local CoreGui = game:GetService("CoreGui")
+    if CoreGui:FindFirstChild("UniverseKeySystem") then
+        CoreGui.UniverseKeySystem:Destroy()
+    end
+
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Name = "UniverseKeySystem"
+    ScreenGui.Parent = CoreGui
+    ScreenGui.ResetOnSpawn = false
+
+    local MainFrame = Instance.new("Frame")
+    MainFrame.Parent = ScreenGui
+    MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+    MainFrame.Position = UDim2.new(0.5, -175, 0.5, -100)
+    MainFrame.Size = UDim2.new(0, 350, 0, 180)
+    MainFrame.Draggable = true
+
+    local UICorner = Instance.new("UICorner")
+    UICorner.CornerRadius = UDim.new(0, 10)
+    UICorner.Parent = MainFrame
+
+    local Title = Instance.new("TextLabel")
+    Title.Parent = MainFrame
+    Title.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
+    Title.Size = UDim2.new(1, 0, 0, 45)
+    Title.Font = Enum.Font.GothamBold
+    Title.Text = "🔐 XÁC THỰC KEY UNIVERSE SCRIPT"
+    Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Title.TextSize = 14
+
+    local TitleCorner = Instance.new("UICorner")
+    TitleCorner.CornerRadius = UDim.new(0, 10)
+    TitleCorner.Parent = Title
+
+    local TextBox = Instance.new("TextBox")
+    TextBox.Parent = MainFrame
+    TextBox.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
+    TextBox.Position = UDim2.new(0, 25, 0, 65)
+    TextBox.Size = UDim2.new(0, 300, 0, 40)
+    TextBox.Font = Enum.Font.Gotham
+    TextBox.PlaceholderText = "Nhập key tại đây (0946)..."
+    TextBox.Text = ""
+    TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TextBox.TextSize = 14
+
+    local BoxCorner = Instance.new("UICorner")
+    BoxCorner.CornerRadius = UDim.new(0, 6)
+    BoxCorner.Parent = TextBox
+
+    local SubmitBtn = Instance.new("TextButton")
+    SubmitBtn.Parent = MainFrame
+    SubmitBtn.BackgroundColor3 = Color3.fromRGB(50, 180, 50)
+    SubmitBtn.Position = UDim2.new(0, 25, 0, 120)
+    SubmitBtn.Size = UDim2.new(0, 300, 0, 40)
+    SubmitBtn.Font = Enum.Font.GothamBold
+    SubmitBtn.Text = "XÁC NHẬN MỞ KHÓA"
+    SubmitBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    SubmitBtn.TextSize = 14
+
+    local BtnCorner = Instance.new("UICorner")
+    BtnCorner.CornerRadius = UDim.new(0, 6)
+    BtnCorner.Parent = SubmitBtn
+
+    SubmitBtn.MouseButton1Click:Connect(function()
+        if TextBox.Text == CorrectKey then
+            ScreenGui:Destroy()
+            Fluent:Notify({Title = "THÀNH CÔNG", Content = "Đã mở khóa Script thành công!", Duration = 3})
+        else
+            SubmitBtn.Text = "❌ SAI KEY! THỬ LẠI"
+            SubmitBtn.BackgroundColor3 = Color3.fromRGB(180, 50, 50)
+            task.wait(1.5)
+            SubmitBtn.Text = "XÁC NHẬN MỞ KHÓA"
+            SubmitBtn.BackgroundColor3 = Color3.fromRGB(50, 180, 50)
+        end
+    end)
+end
+
+-- Kích hoạt bảng nhập Key khi chạy script
+CreateKeyUI()
 
 -- ==========================================
 -- HÀM TẢI SCRIPT AN TOÀN (SAFE LOAD)
@@ -29,7 +116,6 @@ end
 -- KHỞI TẠO TẤT CẢ CÁC TAB
 -- ==========================================
 local Tabs = {
-    Op = Window:AddTab({ Title = "Op script", Icon = "gem" }),
     MM2 = Window:AddTab({ Title = "MM2", Icon = "skull" }),
     Fish = Window:AddTab({ Title = "Heavyweight Fishing", Icon = "fish" }),
     TSB = Window:AddTab({ Title = "TSB Script", Icon = "swords" }),
@@ -38,42 +124,7 @@ local Tabs = {
 }
 
 -- ==========================================
--- 1. TAB: OP SCRIPT (KEY: OP_0946) 🔐
--- ==========================================
-local OpKey = "OP_0946" 
-local KeyUnlocked = false
-local OpSection = Tabs.Op:AddSection("🔐 Xác thực Admin")
-
-Tabs.Op:AddInput("Input", {
-    Title = "Nhập mật mã",
-    Default = "",
-    Placeholder = "Nhập mã tại đây...",
-    Callback = function(Value) _G.InputOpKey = Value end
-})
-
-Tabs.Op:AddButton({
-    Title = "🔓 XÁC NHẬN MỞ KHÓA",
-    Callback = function()
-        if _G.InputOpKey == OpKey then
-            if not KeyUnlocked then
-                KeyUnlocked = true
-                Fluent:Notify({Title = "THÀNH CÔNG", Content = "Đã mở khóa Emote R15!", Duration = 5})
-                Tabs.Op:AddSection("🎭 DANH SÁCH EMOTE")
-                Tabs.Op:AddButton({
-                    Title = "🌟 Full Emote OP Script (R15)",
-                    Callback = function()
-                        SafeLoad("https://raw.githubusercontent.com/7yd7/Hub/refs/heads/Branch/GUIS/Emotes.lua", "Full Emote OP Script")
-                    end
-                })
-            end
-        else
-            Fluent:Notify({Title = "SAI KEY", Content = "Vui lòng kiểm tra lại mật mã!", Duration = 5})
-        end
-    end
-})
-
--- ==========================================
--- 2. TAB: MM2 🔪 (ESP by phong)
+-- 1. TAB: MM2 🔪
 -- ==========================================
 Tabs.MM2:AddSection("ESP by phong")
 
@@ -85,8 +136,18 @@ Tabs.MM2:AddButton({
     end
 })
 
+Tabs.MM2:AddSection("🛠️ Fix bug lỗi nút mm2")
+
+Tabs.MM2:AddButton({
+    Title = "🔧 Chạy Script Fix Bug Nút MM2",
+    Description = "Khắc phục lỗi tương tác nút trong MM2",
+    Callback = function()
+        SafeLoad("https://raw.githubusercontent.com/talaben0307-jpg/fix-bug/refs/heads/main/main", "Fix Bug Nút MM2")
+    end
+})
+
 -- ==========================================
--- 3. TAB: HEAVYWEIGHT FISHING 🎣
+-- 2. TAB: HEAVYWEIGHT FISHING 🎣
 -- ==========================================
 Tabs.Fish:AddSection("🔥 Featured Scripts")
 
@@ -112,7 +173,7 @@ Tabs.Fish:AddButton({
 })
 
 -- ==========================================
--- 4. TAB: TSB SCRIPT ⚔️
+-- 3. TAB: TSB SCRIPT ⚔️
 -- ==========================================
 Tabs.TSB:AddSection("🎭 Animations")
 
@@ -147,7 +208,7 @@ Tabs.TSB:AddButton({
 })
 
 -- ==========================================
--- 5. TAB: PLAYER TOOLS 🛠️
+-- 4. TAB: PLAYER TOOLS 🛠️
 -- ==========================================
 Tabs.Player:AddSection("System Tools")
 
@@ -183,7 +244,7 @@ Tabs.Player:AddButton({
 })
 
 -- ==========================================
--- 6. TAB: VISUALS ✨
+-- 5. TAB: VISUALS ✨
 -- ==========================================
 Tabs.Visual:AddSection("Graphics & Combat Aids")
 
