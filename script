@@ -158,7 +158,6 @@ end
 -- ==========================================
 local Tabs = {
     Home = Window:AddTab({ Title = "Home", Icon = "home" }),
-    OP = Window:AddTab({ Title = "OP Features", Icon = "zap" }),
     MM2 = Window:AddTab({ Title = "MM2", Icon = "skull" }),
     Fish = Window:AddTab({ Title = "Heavyweight Fishing", Icon = "fish" }),
     TSB = Window:AddTab({ Title = "TSB Script", Icon = "swords" }),
@@ -167,56 +166,20 @@ local Tabs = {
 }
 
 -- ==========================================
--- 0. TAB: HOME (CHỨA ẢNH FURINA ANIME)
+-- 0. TAB: HOME (HIỂN THỊ ẢNH FURINA ANIME RÕ RÀNG)
 -- ==========================================
-Tabs.Home:AddSection("🌌 Welcome to Universe Script")
+Tabs.Home:AddSection("💧 Furina Anime Showcase")
 
--- Thêm khung hiển thị ảnh Furina (ID ảnh chuẩn trên Roblox Marketplace)
+-- Sử dụng Paragraph để chèn ảnh chuẩn Decal ID của Roblox
 Tabs.Home:AddParagraph({
-    Title = "Furina Theme 💧",
-    Content = "Chào mừng bạn đến với Universe Script. Giao diện được trang trí phong cách Furina Anime độc quyền!"
-})
-
--- Tạo trực tiếp một khối Image hiển thị ảnh Furina trong Tab Home
-local ImageHolder = Instance.new("Frame")
-ImageHolder.Size = UDim2.new(1, 0, 0, 200)
-ImageHolder.BackgroundTransparency = 1
-
-local FurinaImage = Instance.new("ImageLabel")
-FurinaImage.Parent = ImageHolder
-FurinaImage.Size = UDim2.new(1, 0, 1, 0)
-FurinaImage.BackgroundTransparency = 1
-FurinaImage.Image = "rbxassetid://13812297116" -- ID asset ảnh Furina Anime
-FurinaImage.ScaleType = Enum.ScaleType.Fit
-
--- Thêm bo góc cho khung ảnh đẹp mắt
-local ImgCorner = Instance.new("UICorner")
-ImgCorner.CornerRadius = UDim.new(0, 8)
-ImgCorner.Parent = FurinaImage
-
--- ==========================================
--- 1. TAB: OP FEATURES ⚡
--- ==========================================
-Tabs.OP:AddSection("Main OP Features")
-
-Tabs.OP:AddButton({
-    Title = "🚀 Infinite Yield (Admin Commands)",
-    Description = "Lệnh admin toàn diện cho game",
-    Callback = function()
-        SafeLoad("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source", "Infinite Yield")
-    end
-})
-
-Tabs.OP:AddButton({
-    Title = "🦅 Fly GUI V3",
-    Description = "Bay lượn mọi ngóc ngách",
-    Callback = function()
-        SafeLoad("https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.txt", "Fly GUI V3")
-    end
+    Title = "Universe Script - Furina Edition",
+    Content = "Image",
+    Image = "rbxassetid://15995254273", -- ID ảnh Furina Anime chất lượng cao trên Roblox
+    ImageSize = 120
 })
 
 -- ==========================================
--- 2. TAB: MM2 🔪
+-- 1. TAB: MM2 🔪
 -- ==========================================
 Tabs.MM2:AddSection("ESP by phong")
 
@@ -239,7 +202,7 @@ Tabs.MM2:AddButton({
 })
 
 -- ==========================================
--- 3. TAB: HEAVYWEIGHT FISHING 🎣
+-- 2. TAB: HEAVYWEIGHT FISHING 🎣
 -- ==========================================
 Tabs.Fish:AddSection("🔥 Featured Scripts")
 
@@ -265,7 +228,7 @@ Tabs.Fish:AddButton({
 })
 
 -- ==========================================
--- 4. TAB: TSB SCRIPT ⚔️
+-- 3. TAB: TSB SCRIPT ⚔️
 -- ==========================================
 Tabs.TSB:AddSection("🎭 Animations")
 
@@ -300,7 +263,7 @@ Tabs.TSB:AddButton({
 })
 
 -- ==========================================
--- 5. TAB: PLAYER TOOLS 🛠️
+-- 4. TAB: PLAYER TOOLS 🛠️
 -- ==========================================
 Tabs.Player:AddSection("System Tools")
 
@@ -315,6 +278,20 @@ Tabs.Player:AddButton({
 Tabs.Player:AddSection("Admin Tools")
 
 Tabs.Player:AddButton({ 
+    Title = "Infinite Yield", 
+    Callback = function() 
+        SafeLoad("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source", "Infinite Yield") 
+    end 
+})
+
+Tabs.Player:AddButton({ 
+    Title = "Fly GUI V3", 
+    Callback = function() 
+        SafeLoad("https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.txt", "Fly GUI V3") 
+    end 
+})
+
+Tabs.Player:AddButton({ 
     Title = "Invisible (Tàng hình)", 
     Callback = function() 
         SafeLoad("https://raw.githubusercontent.com/Finilando/script/refs/heads/main/INVISIBLE", "Invisible") 
@@ -322,7 +299,7 @@ Tabs.Player:AddButton({
 })
 
 -- ==========================================
--- 6. TAB: VISUALS ✨
+-- 5. TAB: VISUALS ✨
 -- ==========================================
 Tabs.Visual:AddSection("Graphics & Combat Aids")
 
