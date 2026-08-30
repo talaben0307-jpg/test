@@ -166,16 +166,15 @@ local Tabs = {
 }
 
 -- ==========================================
--- 0. TAB: HOME (HIỂN THỊ ẢNH FURINA ANIME RÕ RÀNG)
+-- 0. TAB: HOME (ĐÃ SỬA ID ẢNH FURINA & CẬP NHẬT TEXT)
 -- ==========================================
 Tabs.Home:AddSection("💧 Furina Anime Showcase")
 
--- Sử dụng Paragraph để chèn ảnh chuẩn Decal ID của Roblox
 Tabs.Home:AddParagraph({
-    Title = "Universe Script - Furina Edition",
+    Title = "Làm bởi Bphong0946",
     Content = "Image",
-    Image = "rbxassetid://15995254273", -- ID ảnh Furina Anime chất lượng cao trên Roblox
-    ImageSize = 120
+    Image = "rbxassetid://13854741352", -- Đã thay bằng ID ảnh Furina Anime chuẩn trên Roblox Marketplace
+    ImageSize = 130
 })
 
 -- ==========================================
@@ -275,17 +274,17 @@ Tabs.Player:AddButton({
     end
 })
 
-Tabs.Player:AddSection("Admin Tools")
+Tabs.Player:AddSection("Admin & Move Tools")
 
 Tabs.Player:AddButton({ 
-    Title = "Infinite Yield", 
+    Title = "🚀 Infinite Yield (Admin)", 
     Callback = function() 
         SafeLoad("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source", "Infinite Yield") 
     end 
 })
 
 Tabs.Player:AddButton({ 
-    Title = "Fly GUI V3", 
+    Title = "🦅 Fly GUI V3", 
     Callback = function() 
         SafeLoad("https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.txt", "Fly GUI V3") 
     end 
