@@ -92,7 +92,7 @@ local function CreateKeyUI()
     TextBox.Position = UDim2.new(0, 25, 0, 65)
     TextBox.Size = UDim2.new(0, 300, 0, 40)
     TextBox.Font = Enum.Font.Gotham
-    TextBox.PlaceholderText = "Nhập key tại đây (0946)..."
+    TextBox.PlaceholderText = "Nhập key tại đây"
     TextBox.Text = ""
     TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
     TextBox.TextSize = 14
