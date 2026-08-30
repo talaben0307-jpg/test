@@ -92,7 +92,7 @@ local function CreateKeyUI()
     TextBox.Position = UDim2.new(0, 35, 0, 95)
     TextBox.Size = UDim2.new(0, 450, 0, 60)
     TextBox.Font = Enum.Font.Gotham
-    TextBox.PlaceholderText = "Nhập key tại đây (0946)..."
+    TextBox.PlaceholderText = "Nhập key tại đây..."
     TextBox.Text = ""
     TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
     TextBox.TextSize = 16
@@ -166,9 +166,9 @@ local Tabs = {
 }
 
 -- ==========================================
--- 0. TAB: HOME (ĐÃ SỬA ID ẢNH FURINA & CẬP NHẬT TEXT)
+-- 0. TAB: HOME 
 -- ==========================================
-Tabs.Home:AddSection("💧 Furina Anime Showcase")
+Tabs.Home:AddSection("cre")
 
 Tabs.Home:AddParagraph({
     Title = "Làm bởi Bphong0946",
