@@ -3,9 +3,9 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 -- Tạo Window chính nhưng ẩn đi lúc đầu (chờ nhập key)
 local Window = Fluent:CreateWindow({
     Title = "Universe Script by @bphong0946 🌌",
-    SubTitle = "⚡ Full Scripts - FPS Boost Update",
+    SubTitle = "⚡ Full Scripts - Furina Anime Edition",
     TabWidth = 160,
-    Size = UDim2.fromOffset(580, 460),
+    Size = UDim2.fromOffset(580, 480),
     Acrylic = true, 
     Theme = "Dark",
     MinimizeKey = Enum.KeyCode.K 
@@ -19,7 +19,7 @@ elseif Window.Hide then
 end
 
 -- ==========================================
--- HỆ THỐNG NHẬP KEY BẢO MẬT (KÉO THẢ ĐƯỢC)
+-- HỆ THỐNG NHẬP KEY PHỦ TO MÀN HÌNH (KÉO THẢ ĐƯỢC)
 -- ==========================================
 local CorrectKey = "0946"
 
@@ -37,24 +37,24 @@ local function CreateKeyUI()
     local MainFrame = Instance.new("Frame")
     MainFrame.Parent = ScreenGui
     MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
-    MainFrame.Position = UDim2.new(0.5, -175, 0.5, -100)
-    MainFrame.Size = UDim2.new(0, 350, 0, 180)
+    MainFrame.Position = UDim2.new(0.5, -260, 0.5, -140)
+    MainFrame.Size = UDim2.new(0, 520, 0, 280)
 
     local UICorner = Instance.new("UICorner")
-    UICorner.CornerRadius = UDim.new(0, 10)
+    UICorner.CornerRadius = UDim.new(0, 12)
     UICorner.Parent = MainFrame
 
     local Title = Instance.new("TextLabel")
     Title.Parent = MainFrame
     Title.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
-    Title.Size = UDim2.new(1, 0, 0, 45)
+    Title.Size = UDim2.new(1, 0, 0, 60)
     Title.Font = Enum.Font.GothamBold
     Title.Text = "🔐 XÁC THỰC KEY UNIVERSE SCRIPT"
     Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-    Title.TextSize = 14
+    Title.TextSize = 18
 
     local TitleCorner = Instance.new("UICorner")
-    TitleCorner.CornerRadius = UDim.new(0, 10)
+    TitleCorner.CornerRadius = UDim.new(0, 12)
     TitleCorner.Parent = Title
 
     -- Tính năng kéo thả (Draggable) mượt mà cho bảng Key
@@ -89,30 +89,30 @@ local function CreateKeyUI()
     local TextBox = Instance.new("TextBox")
     TextBox.Parent = MainFrame
     TextBox.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
-    TextBox.Position = UDim2.new(0, 25, 0, 65)
-    TextBox.Size = UDim2.new(0, 300, 0, 40)
+    TextBox.Position = UDim2.new(0, 35, 0, 95)
+    TextBox.Size = UDim2.new(0, 450, 0, 60)
     TextBox.Font = Enum.Font.Gotham
-    TextBox.PlaceholderText = "Nhập key tại đây"
+    TextBox.PlaceholderText = "Nhập key tại đây (0946)..."
     TextBox.Text = ""
     TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-    TextBox.TextSize = 14
+    TextBox.TextSize = 16
 
     local BoxCorner = Instance.new("UICorner")
-    BoxCorner.CornerRadius = UDim.new(0, 6)
+    BoxCorner.CornerRadius = UDim.new(0, 8)
     BoxCorner.Parent = TextBox
 
     local SubmitBtn = Instance.new("TextButton")
     SubmitBtn.Parent = MainFrame
     SubmitBtn.BackgroundColor3 = Color3.fromRGB(50, 180, 50)
-    SubmitBtn.Position = UDim2.new(0, 25, 0, 120)
-    SubmitBtn.Size = UDim2.new(0, 300, 0, 40)
+    SubmitBtn.Position = UDim2.new(0, 35, 0, 185)
+    SubmitBtn.Size = UDim2.new(0, 450, 0, 60)
     SubmitBtn.Font = Enum.Font.GothamBold
     SubmitBtn.Text = "XÁC NHẬN MỞ KHÓA"
     SubmitBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    SubmitBtn.TextSize = 14
+    SubmitBtn.TextSize = 16
 
     local BtnCorner = Instance.new("UICorner")
-    BtnCorner.CornerRadius = UDim.new(0, 6)
+    BtnCorner.CornerRadius = UDim.new(0, 8)
     BtnCorner.Parent = SubmitBtn
 
     SubmitBtn.MouseButton1Click:Connect(function()
@@ -157,6 +157,8 @@ end
 -- KHỞI TẠO TẤT CẢ CÁC TAB
 -- ==========================================
 local Tabs = {
+    Home = Window:AddTab({ Title = "Home", Icon = "home" }),
+    OP = Window:AddTab({ Title = "OP Features", Icon = "zap" }),
     MM2 = Window:AddTab({ Title = "MM2", Icon = "skull" }),
     Fish = Window:AddTab({ Title = "Heavyweight Fishing", Icon = "fish" }),
     TSB = Window:AddTab({ Title = "TSB Script", Icon = "swords" }),
@@ -165,7 +167,56 @@ local Tabs = {
 }
 
 -- ==========================================
--- 1. TAB: MM2 🔪
+-- 0. TAB: HOME (CHỨA ẢNH FURINA ANIME)
+-- ==========================================
+Tabs.Home:AddSection("🌌 Welcome to Universe Script")
+
+-- Thêm khung hiển thị ảnh Furina (ID ảnh chuẩn trên Roblox Marketplace)
+Tabs.Home:AddParagraph({
+    Title = "Furina Theme 💧",
+    Content = "Chào mừng bạn đến với Universe Script. Giao diện được trang trí phong cách Furina Anime độc quyền!"
+})
+
+-- Tạo trực tiếp một khối Image hiển thị ảnh Furina trong Tab Home
+local ImageHolder = Instance.new("Frame")
+ImageHolder.Size = UDim2.new(1, 0, 0, 200)
+ImageHolder.BackgroundTransparency = 1
+
+local FurinaImage = Instance.new("ImageLabel")
+FurinaImage.Parent = ImageHolder
+FurinaImage.Size = UDim2.new(1, 0, 1, 0)
+FurinaImage.BackgroundTransparency = 1
+FurinaImage.Image = "rbxassetid://13812297116" -- ID asset ảnh Furina Anime
+FurinaImage.ScaleType = Enum.ScaleType.Fit
+
+-- Thêm bo góc cho khung ảnh đẹp mắt
+local ImgCorner = Instance.new("UICorner")
+ImgCorner.CornerRadius = UDim.new(0, 8)
+ImgCorner.Parent = FurinaImage
+
+-- ==========================================
+-- 1. TAB: OP FEATURES ⚡
+-- ==========================================
+Tabs.OP:AddSection("Main OP Features")
+
+Tabs.OP:AddButton({
+    Title = "🚀 Infinite Yield (Admin Commands)",
+    Description = "Lệnh admin toàn diện cho game",
+    Callback = function()
+        SafeLoad("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source", "Infinite Yield")
+    end
+})
+
+Tabs.OP:AddButton({
+    Title = "🦅 Fly GUI V3",
+    Description = "Bay lượn mọi ngóc ngách",
+    Callback = function()
+        SafeLoad("https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.txt", "Fly GUI V3")
+    end
+})
+
+-- ==========================================
+-- 2. TAB: MM2 🔪
 -- ==========================================
 Tabs.MM2:AddSection("ESP by phong")
 
@@ -188,7 +239,7 @@ Tabs.MM2:AddButton({
 })
 
 -- ==========================================
--- 2. TAB: HEAVYWEIGHT FISHING 🎣
+-- 3. TAB: HEAVYWEIGHT FISHING 🎣
 -- ==========================================
 Tabs.Fish:AddSection("🔥 Featured Scripts")
 
@@ -214,7 +265,7 @@ Tabs.Fish:AddButton({
 })
 
 -- ==========================================
--- 3. TAB: TSB SCRIPT ⚔️
+-- 4. TAB: TSB SCRIPT ⚔️
 -- ==========================================
 Tabs.TSB:AddSection("🎭 Animations")
 
@@ -249,7 +300,7 @@ Tabs.TSB:AddButton({
 })
 
 -- ==========================================
--- 4. TAB: PLAYER TOOLS 🛠️
+-- 5. TAB: PLAYER TOOLS 🛠️
 -- ==========================================
 Tabs.Player:AddSection("System Tools")
 
@@ -264,20 +315,6 @@ Tabs.Player:AddButton({
 Tabs.Player:AddSection("Admin Tools")
 
 Tabs.Player:AddButton({ 
-    Title = "Infinite Yield", 
-    Callback = function() 
-        SafeLoad("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source", "Infinite Yield") 
-    end 
-})
-
-Tabs.Player:AddButton({ 
-    Title = "Fly GUI V3", 
-    Callback = function() 
-        SafeLoad("https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.txt", "Fly GUI V3") 
-    end 
-})
-
-Tabs.Player:AddButton({ 
     Title = "Invisible (Tàng hình)", 
     Callback = function() 
         SafeLoad("https://raw.githubusercontent.com/Finilando/script/refs/heads/main/INVISIBLE", "Invisible") 
@@ -285,7 +322,7 @@ Tabs.Player:AddButton({
 })
 
 -- ==========================================
--- 5. TAB: VISUALS ✨
+-- 6. TAB: VISUALS ✨
 -- ==========================================
 Tabs.Visual:AddSection("Graphics & Combat Aids")
 
@@ -302,6 +339,14 @@ Tabs.Visual:AddButton({
     Callback = function() 
         SafeLoad("https://pastefy.app/ItfO0tdg/raw", "Hitbox Script") 
     end 
+})
+
+Tabs.Visual:AddButton({
+    Title = "💃 Emotes GUI Hub",
+    Description = "Mở bảng chọn và biểu cảm hoạt ảnh nhân vật",
+    Callback = function()
+        SafeLoad("https://raw.githubusercontent.com/7yd7/Hub/refs/heads/Branch/GUIS/Emotes.lua", "Emotes GUI")
+    end
 })
 
 Tabs.Visual:AddButton({
@@ -340,7 +385,17 @@ BtnCorner.CornerRadius = UDim.new(0, 10)
 BtnCorner.Parent = MainButton
 
 MainButton.MouseButton1Click:Connect(function()
-    game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.K, false, game)
+    if Window.Toggled ~= nil then
+        Window:Toggle()
+    elseif Window.Enabled ~= nil then
+        Window.Enabled = not Window.Enabled
+    elseif Window.Hide and Window.Show then
+        if Window.Container.Visible then
+            Window:Hide()
+        else
+            Window:Show()
+        end
+    end
 end)
 
 Fluent:OnUnload(function()
