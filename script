@@ -173,7 +173,7 @@ Tabs.Home:AddSection("cre")
 Tabs.Home:AddParagraph({
     Title = "Làm bởi Bphong0946",
     Content = "Image",
-    Image = "rbxassetid://13854741352", -- Đã thay bằng ID ảnh Furina Anime chuẩn trên Roblox Marketplace
+    Image = "rbxassetid://13854741352", 
     ImageSize = 130
 })
 
@@ -274,6 +274,17 @@ Tabs.Player:AddButton({
     end
 })
 
+Tabs.Player:AddSection("ESP Tools")
+
+-- Thêm Rainbow ESP vào Tab Player Tools
+Tabs.Player:AddButton({
+    Title = "🌈 Rainbow ESP",
+    Description = "Bật hiệu ứng ESP đổi màu cầu vồng",
+    Callback = function()
+        SafeLoad("https://raw.githubusercontent.com/talaben0307-jpg/rainbow-esp/refs/heads/main/main", "Rainbow ESP")
+    end
+})
+
 Tabs.Player:AddSection("Admin & Move Tools")
 
 Tabs.Player:AddButton({ 
@@ -333,6 +344,14 @@ Tabs.Visual:AddButton({
     end
 })
 
+Tabs.Visual:AddButton({
+    Title = "🎯 Zelynx Camlock & FOV",
+    Description = "Chạy script Camlock tùy chỉnh FOV từ GitHub",
+    Callback = function()
+        SafeLoad("https://raw.githubusercontent.com/talaben0307-jpg/camlock/refs/heads/main/main", "Zelynx Camlock")
+    end
+})
+
 -- ==========================================
 -- NÚT LƠ LỬNG (FLOATING BUTTON TOGGLE)
 -- ==========================================
@@ -345,7 +364,7 @@ local MainButton = Instance.new("TextButton")
 local BtnCorner = Instance.new("UICorner")
 
 ToggleButton.Name = "UniverseToggleButton"
-ToggleButton.Parent = game:GetService("CoreGui")
+ToggleButton.Parent = CoreGui
 
 MainButton.Parent = ToggleButton
 MainButton.Size = UDim2.new(0, 45, 0, 45)
