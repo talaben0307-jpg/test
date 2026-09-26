@@ -154,11 +154,11 @@ local function SafeLoad(url, name)
 end
 
 -- ==========================================
--- KHỞI TẠO TẤT CẢ CÁC TAB
+-- KHỞI TẠO TẤT CẢ CÁC TAB (Đã thêm tab JJS)
 -- ==========================================
 local Tabs = {
     Home = Window:AddTab({ Title = "Home", Icon = "home" }),
-    Gojo = Window:AddTab({ Title = "Gojo Farm", Icon = "swords" }),
+    JJS = Window:AddTab({ Title = "JJS", Icon = "zap" }),
     MM2 = Window:AddTab({ Title = "MM2", Icon = "skull" }),
     Fish = Window:AddTab({ Title = "Heavyweight Fishing", Icon = "fish" }),
     TSB = Window:AddTab({ Title = "TSB Script", Icon = "swords" }),
@@ -179,132 +179,17 @@ Tabs.Home:AddParagraph({
 })
 
 -- ==========================================
--- 1. TAB: GOJO FARM (Xoay vòng tích dame) ⚔️
+-- 1. TAB: JJS ⚡ (Đã thêm 0.2s gojo farm)
 -- ==========================================
-Tabs.Gojo:AddSection("⚡ 0.2s Gojo Farm (Rotate Mode)")
+Tabs.JJS:AddSection("0.2s gojo farm")
 
-Tabs.Gojo:AddParagraph({
-    Title = "Thông tin tính năng",
-    Content = "Tự động đổi mục tiêu liên tục theo thời gian cài đặt để tích x dame, giữ cố định hitbox và không làm giật màn hình camera."
-})
-
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-local LocalPlayer = Players.LocalPlayer
-
-local isFarmActive = false
-local tpOffset = 3
-local playerList = {}
-local currentIndex = 1
-local lastSwitchTime = 0
-local switchInterval = 1
-
-local function getActivePlayers()
-    local list = {}
-    for _, player in ipairs(Players:GetPlayers()) do
-        if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-            local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
-            if humanoid and humanoid.Health > 0 then
-                table.insert(list, player)
-            end
-        end
-    end
-    return list
-end
-
-Tabs.Gojo:AddToggle("GojoRotateToggle", {
-    Title = "Bật/Tắt Rotate Farm",
-    Default = false,
-    Callback = function(Value)
-        isFarmActive = Value
-        if not isFarmActive then
-            playerList = {}
-            currentIndex = 1
-            pcall(function()
-                local char = LocalPlayer.Character
-                for _, part in ipairs(char:GetDescendants()) do
-                    if part:IsA("BasePart") then
-                        part.CanCollide = true
-                    end
-                end
-            end)
-        end
+Tabs.JJS:AddButton({
+    Title = "⚡ Chạy 0.2s Gojo Farm",
+    Description = "Bấm để kích hoạt script Gojo Farm từ GitHub",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/talaben0307-jpg/0.2s-gojo/refs/heads/main/main"))()
     end
 })
-
-Tabs.Gojo:AddSlider("IntervalSlider", {
-    Title = "Thời gian đổi mục tiêu (Giây)",
-    Description = "Chỉnh số giây để nhảy sang người tiếp theo",
-    Default = 1,
-    Min = 0.5,
-    Max = 5,
-    Rounding = 1,
-    Callback = function(Value)
-        switchInterval = Value
-    end
-})
-
-Tabs.Gojo:AddSlider("TPOffsetSlider", {
-    Title = "Độ cao dịch chuyển (Offset Y)",
-    Description = "Chỉnh khoảng cách đứng trên đầu mục tiêu",
-    Default = 3,
-    Min = 0,
-    Max = 10,
-    Rounding = 0,
-    Callback = function(Value)
-        tpOffset = Value
-    end
-})
-
-RunService.RenderStepped:Connect(function()
-    if not isFarmActive then return end
-    
-    pcall(function()
-        local char = LocalPlayer.Character
-        if not char or not char:FindFirstChild("HumanoidRootPart") then return end
-        local rootPart = char.HumanoidRootPart
-
-        if tick() - lastSwitchTime >= switchInterval then
-            lastSwitchTime = tick()
-            playerList = getActivePlayers()
-            if #playerList > 0 then
-                currentIndex = currentIndex + 1
-                if currentIndex > #playerList then
-                    currentIndex = 1
-                end
-            else
-                currentIndex = 0
-            end
-        end
-
-        local targetPlayer = nil
-        if #playerList > 0 and currentIndex > 0 and currentIndex <= #playerList then
-            targetPlayer = playerList[currentIndex]
-        else
-            playerList = getActivePlayers()
-            if #playerList > 0 then
-                currentIndex = 1
-                targetPlayer = playerList[1]
-            end
-        end
-
-        if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            local targetRoot = targetPlayer.Character.HumanoidRootPart
-            
-            for _, part in ipairs(char:GetDescendants()) do
-                if part:IsA("BasePart") and part.Name ~= "HumanoidRootPart" then
-                    part.CanCollide = false
-                end
-            end
-
-            rootPart.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
-            rootPart.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
-
-            local targetCFrame = targetRoot.CFrame + Vector3.new(0, tpOffset, 0)
-            char:PivotTo(CFrame.new(targetCFrame.Position) * rootPart.CFrame.Rotation)
-        end
-    end)
-end)
 
 -- ==========================================
 -- 2. TAB: MM2 🔪
@@ -483,8 +368,9 @@ Tabs.Visual:AddButton({
 -- ==========================================
 -- NÚT LƠ LỬNG (FLOATING BUTTON TOGGLE)
 -- ==========================================
-if game:GetService("CoreGui"):FindFirstChild("UniverseToggleButton") then
-    game:GetService("CoreGui").UniverseToggleButton:Destroy()
+local CoreGui = game:GetService("CoreGui")
+if CoreGui:FindFirstChild("UniverseToggleButton") then
+    CoreGui.UniverseToggleButton:Destroy()
 end
 
 local ToggleButton = Instance.new("ScreenGui")
