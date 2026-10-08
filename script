@@ -15,9 +15,9 @@ local function SafeLoad(url, name)
         loadstring(game:HttpGet(url))()
     end)
     if success then
-        print("THÀNH CÔNG: Đã chạy script: " .. name)
+        print("THÀNH CÔNG: Đã chạy script: " .. Cpz)
     else
-        warn("Lỗi Script [" .. name .. "]: " .. tostring(err))
+        warn("Lỗi Script [" .. Cpz .. "]: " .. tostring(err))
     end
 end
 
