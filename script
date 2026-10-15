@@ -1,6 +1,6 @@
 --[[
     CPZ Menu / Universe Hub v2
-    - Đã tích hợp tính năng đổi ảnh nền & tùy chỉnh Keybind trực tiếp trong game
+    - Đã tinh chỉnh độ trong suốt nền menu và ảnh nền hiển thị sắc nét hơn
 ]]
 
 local Players = game:GetService("Players")
@@ -310,6 +310,7 @@ function Library:CreateWindow(cfg)
         if KeyGui then KeyGui:Destroy() end
     end)
 
+    -- Đã chỉnh độ trong suốt nền chính thành 0.3 để menu có hiệu ứng xuyên thấu đẹp mắt
     local Main = create("CanvasGroup", {
         Name = "Main",
         Parent = MainGui,
@@ -317,17 +318,18 @@ function Library:CreateWindow(cfg)
         Position = UDim2.new(0.5, 0, 0.5, 0),
         Size = UDim2.new(0, 580, 0, 400),
         BackgroundColor3 = Theme.Background,
+        BackgroundTransparency = 0.3, 
         GroupTransparency = 1,
     }, { corner(12) })
     addAccentStroke(Main, 2)
 
-    -- Khởi tạo ImageLabel làm hình nền menu
+    -- Khởi tạo ImageLabel làm hình nền menu (Chỉnh ImageTransparency = 0.4 để ảnh hiển thị sắc nét hơn)
     local backgroundImage = create("ImageLabel", {
         Parent = Main,
         BackgroundTransparency = 1,
         Size = UDim2.new(1, 0, 1, 0),
         ScaleType = Enum.ScaleType.Crop,
-        ImageTransparency = 0.65,
+        ImageTransparency = 0.4,
         ZIndex = 0,
     }, { corner(12) })
 
